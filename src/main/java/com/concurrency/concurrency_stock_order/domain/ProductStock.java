@@ -1,5 +1,6 @@
 package com.concurrency.concurrency_stock_order.domain;
 
+import com.concurrency.concurrency_stock_order.exception.OutOfStockException;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -22,7 +23,7 @@ public class ProductStock {
 
     public void decreaseStock(int quantity) {
         if (this.stock < quantity) {
-            throw new IllegalArgumentException("재고 부족");
+            throw new OutOfStockException();
         }
         this.stock -= quantity;
     }
