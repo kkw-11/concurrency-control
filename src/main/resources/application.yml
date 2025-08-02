@@ -5,12 +5,8 @@ spring:
     password: rootuser
   jpa:
     hibernate:
-      ddl-auto: update
-    defer-datasource-initialization: true
-    show-sql: true
+      ddl-auto: none
+    show-sql: false
     properties:
       hibernate:
         format_sql: true
-  sql:
-    init:
-      mode: always
