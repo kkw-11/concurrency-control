@@ -8,6 +8,7 @@ import com.concurrency.concurrency_stock_order.repository.ProductStockRepository
 import com.concurrency.concurrency_stock_order.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
@@ -18,7 +19,7 @@ public class OrderService {
     private final ProductStockRepository productStockRepository;
     private final OrderRepository orderRepository;
 
-    @Transactional
+    @Transactional(isolation = Isolation.REPEATABLE_READ)
     public void placeOrder(Long userId, Long productId, int quantity) {
         User user = userRepository.findById(userId).orElseThrow();
         ProductStock product = productStockRepository.findById(productId).orElseThrow();
