@@ -6,9 +6,9 @@ import com.concurrency.concurrency_stock_order.domain.User;
 import com.concurrency.concurrency_stock_order.repository.OrderRepository;
 import com.concurrency.concurrency_stock_order.repository.ProductStockRepository;
 import com.concurrency.concurrency_stock_order.repository.UserRepository;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
