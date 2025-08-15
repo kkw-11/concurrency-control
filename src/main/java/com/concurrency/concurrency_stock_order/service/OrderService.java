@@ -22,7 +22,8 @@ public class OrderService {
     @Transactional(isolation = Isolation.REPEATABLE_READ)
     public void placeOrder(Long userId, Long productId, int quantity) {
         User user = userRepository.findById(userId).orElseThrow();
-        ProductStock product = productStockRepository.findById(productId).orElseThrow();
+        // 락을 걸고 상품 조회
+        ProductStock product = productStockRepository.findByIdForUpdate(productId);
 
         product.decreaseStock(quantity); // 재고 차감
         orderRepository.save(new Order(user, product, quantity));
