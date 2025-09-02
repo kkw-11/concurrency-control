@@ -12,7 +12,6 @@ public class ProductsResponse {
 
     private List<ProductDto> products;
 
-    // 정적 팩토리 메서드
     public static ProductsResponse of(List<Product> productList) {
         List<ProductDto> dtoList = productList.stream()
                 .map(ProductDto::from)
