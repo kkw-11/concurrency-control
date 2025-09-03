@@ -56,9 +56,10 @@ public class ConcurrencyTest {
                 try {
                     orderService.placeOrder(userId, productId, 1);
                 } catch (OutOfStockException e) {
+                    e.printStackTrace();
                     exceptionCount.incrementAndGet(); // 재고 부족 예외 카운트
                 } catch (Exception e) {
-                    System.out.println("예상 외 예외: " + e.getMessage());
+                    e.printStackTrace();
                     exceptionCount.incrementAndGet(); // 다른 예외도 카운트
                 } finally {
                     latch.countDown();
