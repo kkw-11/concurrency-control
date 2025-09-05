@@ -60,7 +60,6 @@ public class ConcurrencyTest {
                     exceptionCount.incrementAndGet(); // 재고 부족 예외 카운트
                 } catch (Exception e) {
                     e.printStackTrace();
-                    exceptionCount.incrementAndGet(); // 다른 예외도 카운트
                 } finally {
                     latch.countDown();
                 }
@@ -91,7 +90,7 @@ public class ConcurrencyTest {
 
     @Test
     void 재고_초과_비정상_주문_테스트() throws InterruptedException {
-        int requestCount = 110;
+        int requestCount = stockCount + 10;
         int exceptionCount = 주문_동시요청(requestCount);
 
         int orderCount = orderRepository.findAll().size();
@@ -104,5 +103,23 @@ public class ConcurrencyTest {
         assertThat(exceptionCount).isEqualTo(requestCount - stockCount); // 110개 요청 중 10개는 실패해야 함
         assertThat(orderCount).isEqualTo(stockCount);    // 정확히 100개만 성공해야 함
         assertThat(remainStock).isEqualTo(0);     // 재고는 0이어야 함
+    }
+
+    @Test
+    void 동시요청_성능_테스트() throws InterruptedException {
+        int requestCount = stockCount;
+
+        long start = System.currentTimeMillis();
+        int exceptionCount = 주문_동시요청(requestCount);
+        long end = System.currentTimeMillis();
+
+        long elapsedTime = end - start;
+        double elapsedTimeSeconds = (double) requestCount/elapsedTime / 1000.0;
+
+        System.out.println("총 요청수: " + requestCount);
+        System.out.println("걸린시간: " + elapsedTime + "ms");
+        System.out.println("TPS: " + elapsedTimeSeconds);
+
+
     }
 }
