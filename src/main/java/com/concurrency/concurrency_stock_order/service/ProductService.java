@@ -23,4 +23,22 @@ public class ProductService {
         List<Product> productPage = productRepository.findAllByCursor(startId, pageSize);
         return ProductsResponse.of(productPage);
     }
+
+    public ProductsResponse getProducts(Long cursor, int pageSize) {
+        List<Product> products;
+
+        if (cursor == null) {
+            // 첫 페이지
+            products = productRepository.findFirstPage(pageSize);
+        } else {
+            products = productRepository.findAllByCursor(cursor, pageSize);
+        }
+
+        Long nextCursor = products.isEmpty() ? null :
+                products.get(products.size() - 1).getId();
+
+        boolean hasNext = products.size() == pageSize;
+
+        return ProductsResponse.of(products, nextCursor, hasNext, pageSize);
+    }
 }
