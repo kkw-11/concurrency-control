@@ -16,4 +16,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     @Query(value = "select * from product p where p.id >= :id limit :pageSize", nativeQuery = true)
     List<Product> findAllByCursor(@Param("id") Long id, @Param("pageSize") int pageSize);
+
+    @Query(value = "select * from product p order by p.id asc limit :pageSize", nativeQuery = true)
+    List<Product> findFirstPage(@Param("pageSize") int pageSize);
 }

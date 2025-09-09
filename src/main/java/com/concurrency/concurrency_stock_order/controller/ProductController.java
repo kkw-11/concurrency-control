@@ -20,6 +20,15 @@ public class ProductController {
 
     private final ProductService productService;
 
+    @GetMapping("/products")
+    public ApiResponse<ProductsResponse> getProducts(
+            @RequestParam(required = false) Long cursor,
+            @RequestParam(defaultValue = "20") int pageSize) {
+        ProductsResponse response = productService.getProducts(cursor, pageSize);
+        return ApiResponse.success(response);
+    }
+
+
     @GetMapping("/products-offset")
     public ApiResponse<ProductsResponse> getProductsByOffset(
             @PageableDefault(size = 100) Pageable pageable) {
