@@ -37,7 +37,7 @@ public class ProductService {
         Long nextCursor = products.isEmpty() ? null :
                 products.get(products.size() - 1).getId();
 
-        boolean hasNext = products.size() == pageSize;
+        boolean hasNext = (products.size() == pageSize);
 
         return ProductsResponse.of(products, nextCursor, hasNext, pageSize);
     }
